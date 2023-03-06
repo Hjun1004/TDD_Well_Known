@@ -86,16 +86,32 @@ public class AppTests {
                 등록
                 이순신 짱
                 이순신
-                등록
-                아무튼 멋있는 명언
-                아무튼 멋있는 작가
                 """); // 이렇게 하면 \n이 엔터로 동작하는거 같다.
 
         assertThat(rs)
                 .contains("1번 명언이 등록되었습니다.")
                 .contains("2번 명언이 등록되었습니다.")
-                .contains("3번 명언이 등록되었습니다.")
-                .doesNotContain("4번 명언이 등록되었습니댜.");
+                .doesNotContain("4번 명언이 등록되었습니다.");
+    }
+
+    @Test
+    @DisplayName("목록을 입력하면 번호 / 작가 / 명언 이 나와야 한다.")
+    public void t7() {
+        String rs = AppTestRunner.run(""" 
+                등록
+                현재를 사랑하라.
+                작자미상
+                등록
+                과거에 집착하지 마라.
+                작자미상
+                목록
+                """); // 이렇게 하면 \n이 엔터로 동작하는거 같다.
+
+        assertThat(rs)
+                .contains("번호 / 작가 / 명언")
+                .contains("----------------------")
+                .contains("2 / 작자미상 / 과거에 집착하지 마라.")
+                .contains("1 / 작자미상 / 현재를 사랑하라.");
     }
 
 
