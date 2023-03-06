@@ -41,15 +41,7 @@ public class AppTests {
     @DisplayName("프로그램 시작시 타이틀 출력 그리고 종료")
     public void t3() {
 
-        String rs = AppTestRunner.run("");
-
-        Scanner sc = TestUtil.genScanner("종료");
-        ByteArrayOutputStream output = TestUtil.setOutToByteArray();
-
-        new App(sc).run();
-
-        String rs = output.toString();
-        TestUtil.clearSetOutToByteArray(output);
+        String rs = AppTestRunner.run(" ");
 
 
         assertThat(rs)
@@ -62,23 +54,50 @@ public class AppTests {
     @Test
     @DisplayName("잘못된 명령어 입력에 대한 처리")
     public void t4() {
-        String rs = AppTestRunner.run("안녕\n종료2");
-
-        Scanner sc = TestUtil.genScanner("""
-                안녕
-                종료
-                """.stripIndent().trim()); // stripIndent로 인해서 안녕, 종료가 입력되는 것이다.
-        ByteArrayOutputStream output = TestUtil.setOutToByteArray();
-
-        new App(sc).run();
-
-        String rs = output.toString();
-        TestUtil.clearSetOutToByteArray(output);
+        String rs = AppTestRunner.run("안녕\n종료2"); //이렇게 했을때는 \n이 단순 줄바꿈
 
 
         assertThat(rs)
                 .contains("올바르지 않은 명령입니다.");
     }
+
+    @Test
+    @DisplayName("등록화면에서 명언과 작가를 입력받고 명언을 생성한다.")
+    public void t5() {
+        String rs = AppTestRunner.run(""" 
+                등록
+                현재를 사랑하라.
+                작자미상
+                """); // 이렇게 하면 \n이 엔터로 동작하는거 같다.
+
+        assertThat(rs)
+                .contains("명언 : ")
+                .contains("작가 : ")
+                .contains("1번 명언이 등록되었습니다.");
+    }
+
+    @Test
+    @DisplayName("명언이 등록될 때 마다 생성되는 명언의 번호가 1씩 증가한다.")
+    public void t6() {
+        String rs = AppTestRunner.run(""" 
+                등록
+                현재를 사랑하라.
+                작자미상
+                등록
+                이순신 짱
+                이순신
+                등록
+                아무튼 멋있는 명언
+                아무튼 멋있는 작가
+                """); // 이렇게 하면 \n이 엔터로 동작하는거 같다.
+
+        assertThat(rs)
+                .contains("1번 명언이 등록되었습니다.")
+                .contains("2번 명언이 등록되었습니다.")
+                .contains("3번 명언이 등록되었습니다.")
+                .doesNotContain("4번 명언이 등록되었습니댜.");
+    }
+
 
 
 }

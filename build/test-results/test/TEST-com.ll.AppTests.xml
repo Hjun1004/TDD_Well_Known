@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.ll.AppTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-03-06T14:41:50" hostname="DESKTOP-LCEDRIH" time="0.046">
+  <properties/>
+  <testcase name="명언이 등록될 때 마다 생성되는 명언의 번호가 1씩 증가한다." classname="com.ll.AppTests" time="0.046"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
